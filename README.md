@@ -1,2 +1,6 @@
 # docker-recipes
-Different Docker setups
+
+- Recipes
+ - [squid caching proxy](./squid/README.md)
+ - [algorithmic trader](./algo/README.md)
+ 
