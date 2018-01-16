@@ -24,7 +24,7 @@ CMD ["bash"]
 EXPOSE 5901
 ```
 
-This served as a simple starter for C and Python2 that could be extended
+This serves as a simple starter for C and Python2 development that can be extended
 to other programming environments easily.
 
 We can build this container with
@@ -39,12 +39,12 @@ I create a directory to be a share to mount as volume at ```./data```
 mkdir ./data
 ```
 
-Under this directory I can put source projects, packages, tarballs to share
+Under this directory I can put source projects, packages, or tarballs to share
 with the container. 
 
 The run step below puts the VNC console on standard output to show logs from the VNC server.
 It is helpful to run this on it's own pane in [screen](https://www.gnu.org/software/screen/) or your terminal client.
-That is dedicate a terminal to the server log.
+That is, dedicate a terminal to the server log.
 
 This container is run with
 
@@ -60,18 +60,19 @@ docker run \
   bash -c "vncserver :1 -geometry 1280x1024 -depth 24 && tail -F /home/sweng/.vnc/*.log"
 ```
 
-The server prompts for the VNC password to use and the logs all the server output.
-A VNC client can then connect in to the container on the published port at 5911 as
+The server prompts for the VNC password to use and then logs all the server output.
+A VNC client can be used to connect to the container desktop on the published port at 5911 as
 
 ```
 vnc://localhost:5911
 ```
 
-This worked alright in the beginning but later I hit some strange problems with [Qt](https://www.qt.io) apps that made for a problem.
+This worked alright in the beginning but later I hit some strange problems with [Qt](https://www.qt.io) apps.
 It seems some X extensions that Qt depends on may not be built into the TightVNC server.
 One recommendation was to move to [TurboVNC](https://www.turbovnc.org) which implements the extensions needed for Qt.
-TurboVNC was not available in my distribution repositories at the time I implemented, so
-Download it from the [SourceForge page](https://sourceforge.net/projects/turbovnc/) to the current directory.
+TurboVNC was not available in my distribution repositories at the time I implemented.
+Download the package from the [SourceForge page](https://sourceforge.net/projects/turbovnc/) 
+to the current directory before building the image.
 
 The startup file for TurboVNC is ```~/.vnc/xstartup.turbovnc```. The default startup script is
 not a good fit for LXDE so I replace it with a less verbose version. The modified script is
@@ -80,7 +81,7 @@ packaged as a tar file that can be unpacked to make the .vnc directory structure
 These dependencies are installed in the container build. This iteration of the build
 uses the Squid proxy [recipe](../squid/README.md).
 
-Follow the Squid recipe pattern and Build the container with
+Follow the Squid recipe pattern and build the container with
 
 ```
 docker build \
@@ -103,7 +104,7 @@ ENV https_proxy=http://squid:3128
 ENV ftp_proxy=http://squid:3128
 ```
 
-then rebuild. Run the container with
+then rebuild. Run the container attached to the network hosting Squid proxy with
 
 ```
 docker run \
