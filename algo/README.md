@@ -1,15 +1,15 @@
 # Algorithmic Trader Desktop
 
-This recipe is my take of modernizing the software install described
+This recipe is my take on modernizing the software install described
 in Chapter 6 of the book
 [Successful Algorithmic Trading](https://www.quantstart.com/successful-algorithmic-trading-ebook)
 by Michael Halls-Moore. The goal is to have a containerized simulation
-desktop that can be developed locally and later deployed to cloud.
+and analysis desktop that can be developed locally and later deployed to cloud.
 
-Some of the software selections were updated or adapted to this use case.
-For instance, Debian Stretch is used here rather than Ubuntu. Rather than
-the default Ubuntu desktop, this environment will host LXDE running on
-TurboVNC server. The latter has better support for qtconsole compared to TightVNC.
+Some of the software selections detailed in the book were updated or adapted for this use case.
+For instance, Debian is used here in place of Ubuntu Desktop. Rather than
+the Ubuntu's default Unity desktop shell, this environment will host LXDE running on
+TurboVNC server. The latter is chosen for its better support for qtconsole compared to TightVNC.
 
 This recipe uses the Squid [recipe](../squid/README.md) and derives from the VNC [recipe](../vnc/README.md).
 This project is built using the proxy container with
