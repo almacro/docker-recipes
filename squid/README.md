@@ -1,8 +1,9 @@
 # Squid on Docker Recipe
 
-Squid is a caching proxy server. It can be useful to run a Squid proxy
-in a Docker network to reduce build time and keep from downloading the
-same package or tarball over and over again during iterative development.
+[Squid](http://www.squid-cache.org/Intro/) is a caching proxy server. 
+It can be useful to run a Squid proxy in a Docker network to reduce 
+build time and keep from downloading the same package or tarball over 
+and over again during iterative development.
 
 For this recipe, we use the Squid proxy Docker image from [sameersbn](https://github.com/sameersbn/docker-squid).
 This is a reasonable implementation and the Dockerfile is available on the link to review for security issues or other problems.
@@ -28,7 +29,7 @@ cp ~/Downloads/squid.conf $SQUID_CONF_DIR
 ```
 
 The default configuration for sameersbn's image has object and cache_dir limits that are
-too small for many of the packages and other objects we may download to the image.
+too small for many of the packages and other objects we may download in building an image.
 This recipe's directory has a modified squid.conf file that raises these limits.
 
 4. Create a Docker network to host squid and containers under development
@@ -42,7 +43,7 @@ docker network create $DOCKER_NET
 
 ```
 docker run \
-  -- name squid \
+  --name squid \
   -d \
   --restart-always \
   --publish 3128:3128 \
