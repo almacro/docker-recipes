@@ -80,4 +80,38 @@ packaged as a tar file that can be unpacked to make the .vnc directory structure
 These dependencies are installed in the container build. This iteration of the build
 uses the Squid proxy [recipe](../squid/README.md).
 
-The container is built and run as above.
+Follow the Squid recipe pattern and Build the container with
+
+```
+docker build \
+  --network $DOCKER_NET \
+  --build-arg http_proxy=http://squid:3128 \
+  --build-arg https_proxy=http://squid:3128 \
+  --build-arg ftp_proxy=http://squid:3128 \
+  -t docker-vnc \
+  .
+
+```
+
+The container can be run as above.
+To connect the container to the Squid proxy use this command, edit
+the Dockerfile to include the environment variable set up 
+
+```
+ENV http_proxy http://squid:3128
+ENV https_proxy=http://squid:3128
+ENV ftp_proxy=http://squid:3128
+```
+
+then rebuild. Run the container with
+
+```
+docker run \
+  --name docker-vnc \
+  --network $DOCKER_NET \
+  --rm \
+  -it \
+  docker-vnc \
+  bash -c "vncserver :1 -geometry 1280x1024 -depth 24 && tail -F /home/sweng/.vnc/*.log""
+```
+
