@@ -12,7 +12,13 @@ the Ubuntu's default Unity desktop shell, this environment will host LXDE runnin
 TurboVNC server. The latter is chosen for its better support for qtconsole compared to TightVNC.
 
 This recipe uses the Squid [recipe](../squid/README.md) and derives from the VNC [recipe](../vnc/README.md).
+
+This recipe uses [MySQL](https://github.com/docker-library/mysql) container for data persistence.
+It simply links to a running container.
+
 This project is built using the proxy container with
+
+
 
 ```
 docker build \
@@ -33,7 +39,8 @@ docker run \
   -p 5910:5901 \
   -e USER=root \
   -v $PWD/data:/usr/local/src \
+  --link mysql:sqldb \
   --name algotra \
   algotra \
-  bash -c "vncserver :1 -geometry 1280x1024 -depth 24 && tail -F /home/atrader/.vnc/*.log"
+  bash -c "virtualenv venv; vncserver :1 -geometry 1280x1024 -depth 24 && tail -F /home/atrader/.vnc/*.log"
 ```
